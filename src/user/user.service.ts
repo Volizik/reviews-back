@@ -1,56 +1,48 @@
-import { Injectable } from '@nestjs/common';
-import {IUser} from "./user.interfaces";
-import {ChangeUserDto} from "./dto/change-user.dto";
+import {Injectable} from '@nestjs/common';
 import {CreateUserDto} from "./dto/create-user.dto";
 import {InjectRepository} from "@nestjs/typeorm";
-import {Repository} from "typeorm";
 import {User} from "./user.entity";
+import {UserRepository} from "./user.repository";
 
 @Injectable()
 export class UserService {
 
     constructor(
-        @InjectRepository(User)
-        private usersRepository: Repository<User>,
+        @InjectRepository(UserRepository)
+        private usersRepository: UserRepository,
     ) {}
+    //
+    // public getUsers(): IUser[] {
+    //     return this.users;
+    // }
 
-    private users: IUser[] = [
-        { id: '1', name: 'Вася' },
-        { id: '2', name: 'Петя' },
-    ];
-
-    public getUsers(): IUser[] {
-        return this.users;
+    async findOne(username: string): Promise<User | undefined> {
+        return this.usersRepository.findOne({username});
     }
 
-    public getUserById(id: string): IUser {
-        return this.users.find(u => u.id === id);
+    // public getUserById(id: string): IUser {
+    //     return this.users.find(u => u.id === id);
+    // }
+
+    public async createUser(createUserDto: CreateUserDto): Promise<User> {
+        return this.usersRepository.createUser(createUserDto);
     }
 
-    public createUser({ name }: CreateUserDto): IUser {
-        const user = {
-            id: (this.users.length + 1).toString(),
-            name
-        };
-        this.users.push(user);
-        return user;
-    }
-
-    public changeUser({ id, name }: ChangeUserDto): IUser {
-        let user: IUser;
-        this.users.map(u => {
-            if (u.id === id) {
-                u.name = name;
-                user = u;
-            }
-        });
-        return user;
-    }
-
-    public deleteUser(id: string): IUser {
-        const user = this.users.find(u => u.id === id);
-        this.users = this.users.filter(u => u.id !== id);
-        return user;
-    }
+    // public changeUser({ id, name }: ChangeUserDto): IUser {
+    //     let user: IUser;
+    //     this.users.map(u => {
+    //         if (u.id === id) {
+    //             u.name = name;
+    //             user = u;
+    //         }
+    //     });
+    //     return user;
+    // }
+    //
+    // public deleteUser(id: string): IUser {
+    //     const user = this.users.find(u => u.id === id);
+    //     this.users = this.users.filter(u => u.id !== id);
+    //     return user;
+    // }
 
 }
