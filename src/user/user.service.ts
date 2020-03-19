@@ -11,13 +11,21 @@ export class UserService {
         @InjectRepository(UserRepository)
         private usersRepository: UserRepository,
     ) {}
-    //
-    // public getUsers(): IUser[] {
-    //     return this.users;
-    // }
+
+    async getUsers(): Promise<User[]> {
+        return this.usersRepository.find();
+    }
 
     async findOne(username: string): Promise<User | undefined> {
         return this.usersRepository.findOne({username});
+    }
+
+    async getUserWithPassword(username: string): Promise<User | undefined> {
+        return this.usersRepository
+            .createQueryBuilder('user')
+            .addSelect('user.password')
+            .where('user.username = :username', {username})
+            .getOne();
     }
 
     // public getUserById(id: string): IUser {
