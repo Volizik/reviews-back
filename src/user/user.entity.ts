@@ -1,4 +1,5 @@
-import {Entity, Column, PrimaryGeneratedColumn, Unique, BaseEntity} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, Unique, BaseEntity, OneToMany} from 'typeorm';
+import {Worker} from "../worker/worker.entity";
 
 @Entity()
 @Unique(['username', 'email'])
@@ -17,4 +18,7 @@ export class User extends BaseEntity {
 
     @Column({ select: false })
     password: string;
+
+    @OneToMany(type => Worker, worker => worker.creator)
+    workers: Worker[];
 }

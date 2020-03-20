@@ -11,7 +11,7 @@ const typeormConfig: TypeOrmModuleOptions = {
     "password": dbConfig.password,
     "database": dbConfig.name,
     "entities": [__dirname + '/../../dist/**/*.entity.js'],
-    "synchronize": true
+    "synchronize": true,
 };
 
 export default typeormConfig;
