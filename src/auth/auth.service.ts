@@ -21,17 +21,20 @@ export class AuthService {
     }
 
     async login(user: User): Promise<{accessToken: string}> {
-        const payload = { username: user.username, sub: user.id };
+        const payload = { email: user.email, sub: user.id };
         return {
             accessToken: this.jwtService.sign(payload),
         };
     }
 
-    async validateUser(username: string, pass: string): Promise<User> {
-        const user = await this.userService.getUserWithPassword(username);
-        const isPasswordValid = await this.isPasswordValid(pass, user.password);
-        if (user && isPasswordValid) {
-            return user;
+    async validateUser(email: string, pass: string): Promise<User> {
+        const user = await this.userService.getUserWithPassword(email);
+        if (user) {
+            const isPasswordValid = await this.isPasswordValid(pass, user.password);
+
+            if (isPasswordValid) {
+                return user;
+            }
         }
         return null;
     }

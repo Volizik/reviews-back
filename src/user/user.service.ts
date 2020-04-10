@@ -16,15 +16,15 @@ export class UserService {
         return this.usersRepository.find();
     }
 
-    async findOne(username: string): Promise<User | undefined> {
-        return this.usersRepository.findOne({username});
+    async findOne(email: string): Promise<User | undefined> {
+        return this.usersRepository.findOne({email});
     }
 
-    async getUserWithPassword(username: string): Promise<User | undefined> {
+    async getUserWithPassword(email: string): Promise<User | undefined> {
         return this.usersRepository
             .createQueryBuilder('user')
             .addSelect('user.password')
-            .where('user.username = :username', {username})
+            .where('user.email = :email', {email})
             .getOne();
     }
 
