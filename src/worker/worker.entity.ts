@@ -1,5 +1,6 @@
-import {BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
+import {BaseEntity, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import {User} from "../user/user.entity";
+import {Review} from "../review/review.entity";
 
 @Entity()
 export class Worker extends BaseEntity {
@@ -26,6 +27,9 @@ export class Worker extends BaseEntity {
 
     @ManyToOne(type => User, user => user.workers)
     creator: User;
+
+    @OneToMany(type => Review, review => review.worker)
+    reviews: Review[];
 
     @Column()
     creatorId: number;
