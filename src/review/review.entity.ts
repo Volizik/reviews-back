@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn, BaseEntity, ManyToOne} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, BaseEntity, ManyToOne, CreateDateColumn} from 'typeorm';
 import {User} from "../user/user.entity";
 import {Worker} from "../worker/worker.entity";
 
@@ -41,9 +41,12 @@ export class Review extends BaseEntity {
     workingHouseNumber: string;
 
     @Column()
-    workingPosition: string;
+    workingPlace: string;
 
     @Column()
+    workingPosition: string;
+
+    @Column({type: "longtext"})
     review: string;
 
     @ManyToOne(type => User)
@@ -51,4 +54,7 @@ export class Review extends BaseEntity {
 
     @ManyToOne(type => Worker, worker => worker.reviews)
     worker: Worker;
+
+    @CreateDateColumn()
+    createdAt: Date;
 }

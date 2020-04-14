@@ -18,6 +18,7 @@ export class ReviewRepository extends Repository<Review> {
             return review;
         }
         catch (error) {
+            console.log(error)
             throw new InternalServerErrorException();
         }
 

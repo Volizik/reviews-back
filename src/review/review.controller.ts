@@ -1,8 +1,9 @@
-import {Body, Controller, Delete, Get, Param, Post, Put} from '@nestjs/common';
+import {Body, Controller, Delete, Get, Param, Post, Put, UploadedFile, UseInterceptors} from '@nestjs/common';
 import {ReviewService} from "./review.service";
 import {CreateReviewDto} from "./dto/create-review.dto";
 import {UpdateReviewDto} from "./dto/update-review.dto";
 import { Review } from './review.entity'
+import {FileInterceptor} from "@nestjs/platform-express";
 
 @Controller('review')
 export class ReviewController {
@@ -23,6 +24,12 @@ export class ReviewController {
     @Post('')
     create(@Body() body: CreateReviewDto): Promise<Review> {
         return this.reviewService.create(body);
+    }
+
+    @Post('photo')
+    @UseInterceptors(FileInterceptor('photo'))
+    uploadPhoto(@UploadedFile() photo) {
+        console.log(photo)
     }
 
     // @Put(':id')
