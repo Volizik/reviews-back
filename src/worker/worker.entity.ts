@@ -25,6 +25,9 @@ export class Worker extends BaseEntity {
     @Column()
     city: string;
 
+    @Column()
+    photo: string;
+
     @ManyToOne(type => User, user => user.workers)
     creator: User;
 

@@ -4,6 +4,7 @@ import {CreateReviewDto} from "./dto/create-review.dto";
 import {UpdateReviewDto} from "./dto/update-review.dto";
 import { Review } from './review.entity'
 import {FileInterceptor} from "@nestjs/platform-express";
+import {multerOptions} from "../utils/multer";
 
 @Controller('review')
 export class ReviewController {
@@ -22,14 +23,12 @@ export class ReviewController {
     }
 
     @Post('')
-    create(@Body() body: CreateReviewDto): Promise<Review> {
-        return this.reviewService.create(body);
-    }
-
-    @Post('photo')
-    @UseInterceptors(FileInterceptor('photo'))
-    uploadPhoto(@UploadedFile() photo) {
-        console.log(photo)
+    @UseInterceptors(FileInterceptor('photo', multerOptions))
+    create(
+        @Body() body: CreateReviewDto,
+        @UploadedFile() photo: Express.Multer.File,
+    ): Promise<Review> {
+        return this.reviewService.create(body, photo);
     }
 
     // @Put(':id')

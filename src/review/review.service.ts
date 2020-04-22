@@ -42,8 +42,8 @@ export class ReviewService {
     //     return review;
     // }
     //
-    public create(review: CreateReviewDto): Promise<Review> {
-        return this.reviewRepository.createReview(review)
+    public create(review: CreateReviewDto, photo: Express.Multer.File): Promise<Review> {
+        return this.reviewRepository.createReview(review, photo)
     }
 
 }

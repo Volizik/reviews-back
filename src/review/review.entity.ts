@@ -49,6 +49,9 @@ export class Review extends BaseEntity {
     @Column({type: "longtext"})
     review: string;
 
+    @Column()
+    photo: string;
+
     @ManyToOne(type => User)
     creator: User;
 
