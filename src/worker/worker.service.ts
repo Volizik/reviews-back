@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import {Injectable} from '@nestjs/common';
 import {Worker} from "./worker.entity";
 import {CreateWorkerDto} from "./dto/create-worker.dto";
 import {WorkerRepository} from "./worker.repository";
