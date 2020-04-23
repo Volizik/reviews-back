@@ -1,8 +1,16 @@
 export interface CreateWorkerDto {
     firstName: string;
     lastName: string;
-    position: string;
-    country: string;
-    city: string;
-    workPlace: string;
+    fatherName: string;
+    livingCountry: string;
+    livingCity: string;
+    livingStreet: string;
+    livingHouseNumber: string;
+    workingCountry: string;
+    workingCity: string;
+    workingStreet: string;
+    workingHouseNumber: string;
+    workingPlace: string;
+    workingPosition: string;
+    photo?: Express.Multer.File;
 }

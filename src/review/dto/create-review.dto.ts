@@ -11,5 +11,6 @@ export interface CreateReviewDto {
     workingStreet: string;
     workingHouseNumber: string;
     workingPosition: string;
-    review: string;
+    workingPlace: string;
+    text: string;
 }

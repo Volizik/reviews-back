@@ -1,24 +1,22 @@
-import {EntityRepository, Repository} from "typeorm";
+import {EntityRepository, getCustomRepository, Repository} from "typeorm";
 import {Review} from "./review.entity";
 import {CreateReviewDto} from "./dto/create-review.dto";
 import {InternalServerErrorException} from "@nestjs/common";
-import * as config from 'config';
+import {WorkerRepository} from "../worker/worker.repository";
+import {User} from "../user/user.entity";
 
 @EntityRepository(Review)
 export class ReviewRepository extends Repository<Review> {
 
-    async createReview(data: CreateReviewDto, photo: Express.Multer.File): Promise<Review> {
+    async createReview({text, ...workerData}: CreateReviewDto, photo: Express.Multer.File, creator: User): Promise<Review> {
         const review = new Review();
-        const baseUrl = config.get('baseUrl');
 
-        Object.keys(data).forEach((key) => {
-            review[key] = data[key];
-        });
-        if (photo) {
-            review.photo = `${baseUrl}/worker/photo/${photo.filename}`;
-        } else {
-            review.photo = `${baseUrl}/worker/photo/default_photo.png`;
-        }
+        const workerRepository = getCustomRepository(WorkerRepository);
+        const worker = await workerRepository.createWorker({...workerData, photo}, creator);
+
+        review.text = text;
+        review.creator = creator;
+        review.worker = worker;
 
         try {
             await review.save();

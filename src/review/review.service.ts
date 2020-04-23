@@ -4,6 +4,7 @@ import {CreateReviewDto} from "./dto/create-review.dto";
 import {Review} from "./review.entity";
 import {InjectRepository} from "@nestjs/typeorm";
 import {ReviewRepository} from "./review.repository";
+import {User} from "../user/user.entity";
 
 @Injectable()
 export class ReviewService {
@@ -42,8 +43,8 @@ export class ReviewService {
     //     return review;
     // }
     //
-    public create(review: CreateReviewDto, photo: Express.Multer.File): Promise<Review> {
-        return this.reviewRepository.createReview(review, photo)
+    public create(review: CreateReviewDto, photo: Express.Multer.File, creator: User): Promise<Review> {
+        return this.reviewRepository.createReview(review, photo, creator)
     }
 
 }

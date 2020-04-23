@@ -7,56 +7,18 @@ export class Review extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
-    firstName: string;
-
-    @Column()
-    lastName: string;
-
-    @Column()
-    fatherName: string;
-
-    @Column()
-    livingCountry: string;
-
-    @Column()
-    livingCity: string;
-
-    @Column()
-    livingStreet: string;
-
-    @Column()
-    livingHouseNumber: string;
-
-    @Column()
-    workingCountry: string;
-
-    @Column()
-    workingCity: string;
-
-    @Column()
-    workingStreet: string;
-
-    @Column()
-    workingHouseNumber: string;
-
-    @Column()
-    workingPlace: string;
-
-    @Column()
-    workingPosition: string;
-
     @Column({type: "longtext"})
-    review: string;
-
-    @Column()
-    photo: string;
+    text: string;
 
     @ManyToOne(type => User)
     creator: User;
+    @Column()
+    creatorId: number;
 
-    @ManyToOne(type => Worker, worker => worker.reviews)
+    @ManyToOne(type => Worker, {eager: true})
     worker: Worker;
+    @Column()
+    workerId: number;
 
     @CreateDateColumn()
     createdAt: Date;
