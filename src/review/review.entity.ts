@@ -17,8 +17,6 @@ export class Review extends BaseEntity {
 
     @ManyToOne(type => Worker, {eager: true})
     worker: Worker;
-    @Column()
-    workerId: number;
 
     @CreateDateColumn()
     createdAt: Date;

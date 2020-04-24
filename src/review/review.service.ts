@@ -18,33 +18,27 @@ export class ReviewService {
         return await this.reviewRepository.find();
     }
 
-    // getByFilter(): Review[] {
-    //     return this.reviews;
-    // }
-
     async getById(id: string): Promise<Review> {
         return await this.reviewRepository.findOne(id);
     }
 
-    // update({ id, message, title }: UpdateReviewDto): Review {
-    //     let review: Review;
-    //     this.reviews.map(r => {
-    //         if (r.id === id) {
-    //             r.message = message ?? r.message;
-    //             r.title = title ?? r.title;
-    //         }
-    //     });
-    //     return review;
-    // }
-    //
     // delete(id: string): Review {
     //     const review = this.reviews.find(r => r.id === id);
     //     this.reviews = this.reviews.filter(r => r.id !== id);
     //     return review;
     // }
     //
-    public create(review: CreateReviewDto, photo: Express.Multer.File, creator: User): Promise<Review> {
+    create(review: CreateReviewDto, photo: Express.Multer.File, creator: User): Promise<Review> {
         return this.reviewRepository.createReview(review, photo, creator)
+    }
+
+    update(
+        id: string,
+        updateReviewDto: UpdateReviewDto,
+        photo: Express.Multer.File,
+        creator: User
+    ): Promise<Review> {
+        return this.reviewRepository.updateReview(id, updateReviewDto, photo, creator);
     }
 
 }

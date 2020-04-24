@@ -1,4 +1,4 @@
-export interface UpdateReviewDto {
+export interface UpdateWorkerDto {
     firstName: string;
     lastName: string;
     fatherName: string;
@@ -10,7 +10,7 @@ export interface UpdateReviewDto {
     workingCity: string;
     workingStreet: string;
     workingHouseNumber: string;
-    workingPosition: string;
     workingPlace: string;
-    text: string;
+    workingPosition: string;
+    photo?: Express.Multer.File;
 }

@@ -47,14 +47,18 @@ export class ReviewController {
         return this.reviewService.create(body, photo, user);
     }
 
-    // @Put(':id')
-    // update(
-    //     @Param('id') id: string,
-    //     @Body() body: UpdateReviewDto
-    // ): Review {
-    //     return this.reviewService.update({ id, ...body });
-    // }
-    //
+    @UseGuards(AuthGuard('jwt'))
+    @Put(':id')
+    @UseInterceptors(FileInterceptor('photo', multerOptions))
+    update(
+        @Param('id') id: string,
+        @Body() body: UpdateReviewDto,
+        @UploadedFile() photo: Express.Multer.File,
+        @GetUser() user: User,
+    ): Promise<Review> {
+        return this.reviewService.update(id, body, photo, user);
+    }
+
     // @Delete(':id')
     // delete(@Param('id') id: string): Review {
     //     return this.reviewService.delete(id);

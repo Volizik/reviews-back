@@ -4,6 +4,7 @@ import {CreateReviewDto} from "./dto/create-review.dto";
 import {InternalServerErrorException} from "@nestjs/common";
 import {WorkerRepository} from "../worker/worker.repository";
 import {User} from "../user/user.entity";
+import {UpdateReviewDto} from "./dto/update-review.dto";
 
 @EntityRepository(Review)
 export class ReviewRepository extends Repository<Review> {
@@ -17,6 +18,33 @@ export class ReviewRepository extends Repository<Review> {
         review.text = text;
         review.creator = creator;
         review.worker = worker;
+
+        try {
+            await review.save();
+            return review;
+        }
+        catch (error) {
+            console.log(error)
+            throw new InternalServerErrorException();
+        }
+
+    }
+
+    async updateReview(id: string, {text, ...workerData}: UpdateReviewDto, photo: Express.Multer.File, creator: User): Promise<Review> {
+        const review = await this.findOne(id);
+
+        if (review.creatorId !== creator.id) {
+            throw new Error('Нет прав изменять данные этого пользователя!');
+        }
+
+        const workerRepository = getCustomRepository(WorkerRepository);
+        await workerRepository.updateWorker(
+            review.worker.id,
+            {photo, ...workerData},
+            creator,
+        );
+
+        review.text = text;
 
         try {
             await review.save();
