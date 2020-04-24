@@ -19,12 +19,12 @@ import {multerOptions} from "../utils/multer";
 import {AuthGuard} from "@nestjs/passport";
 import {GetUser} from "../auth/get-user.decorator";
 import {User} from "../user/user.entity";
+import {DeleteResult} from "typeorm";
 
 @Controller('review')
 export class ReviewController {
 
-    constructor(private reviewService: ReviewService) {
-    }
+    constructor(private reviewService: ReviewService) {}
 
     @Get('')
     getAll(): Promise<Review[]> {
@@ -32,7 +32,7 @@ export class ReviewController {
     }
 
     @Get(':id')
-    findOne(@Param('id') id: string): Promise<Review> {
+    getById(@Param('id') id: string): Promise<Review> {
         return this.reviewService.getById(id);
     }
 
@@ -59,9 +59,9 @@ export class ReviewController {
         return this.reviewService.update(id, body, photo, user);
     }
 
-    // @Delete(':id')
-    // delete(@Param('id') id: string): Review {
-    //     return this.reviewService.delete(id);
-    // }
+    @Delete(':id')
+    delete(@Param('id') id: string): Promise<DeleteResult> {
+        return this.reviewService.delete(id);
+    }
 
 }
