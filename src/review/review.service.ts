@@ -15,7 +15,12 @@ export class ReviewService {
         private reviewRepository: ReviewRepository,
     ) {}
 
-    async getAll(): Promise<Review[]> {
+    async getAll(
+        creatorId?: string,
+    ): Promise<Review[]> {
+        if (creatorId) {
+            return await this.reviewRepository.find({where: {creatorId}});
+        }
         return await this.reviewRepository.find();
     }
 

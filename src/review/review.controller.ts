@@ -5,7 +5,7 @@ import {
     Get,
     Param,
     Post,
-    Put,
+    Put, Query,
     UploadedFile,
     UseGuards,
     UseInterceptors
@@ -27,8 +27,10 @@ export class ReviewController {
     constructor(private reviewService: ReviewService) {}
 
     @Get('')
-    getAll(): Promise<Review[]> {
-        return this.reviewService.getAll();
+    getAll(
+        @Query('creatorId') creatorId: string,
+    ): Promise<Review[]> {
+        return this.reviewService.getAll(creatorId);
     }
 
     @Get(':id')
