@@ -6,6 +6,7 @@ import {InjectRepository} from "@nestjs/typeorm";
 import {ReviewRepository} from "./review.repository";
 import {User} from "../user/user.entity";
 import {DeleteResult} from "typeorm";
+import {ReviewsFilterDTO} from "./dto/reviews-filter.dto";
 
 @Injectable()
 export class ReviewService {
@@ -15,11 +16,9 @@ export class ReviewService {
         private reviewRepository: ReviewRepository,
     ) {}
 
-    async getAll(
-        creatorId?: string,
-    ): Promise<Review[]> {
-        if (creatorId) {
-            return await this.reviewRepository.find({where: {creatorId}});
+    async getAll({byCreator}: ReviewsFilterDTO): Promise<Review[]> {
+        if (!!byCreator) {
+            return await this.reviewRepository.find({where: {creatorId: byCreator}});
         }
         return await this.reviewRepository.find();
     }
