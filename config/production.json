@@ -1,0 +1,13 @@
+{
+  "port": 80,
+  "database": {
+    "host": "ec2-52-7-39-178.compute-1.amazonaws.com",
+    "port": 5432,
+    "username": "nttnghgqedgimx",
+    "password": "37d4e415701404e7aaddc4f0972612de40c50cfec5ab688add0c6329d3b21b87",
+    "name": "dek6nhasl9gdvc"
+  },
+  "saltRounds": 10,
+  "jwtSecret": "bevz",
+  "baseUrl": "https://worker-reviews.herokuapp.com/"
+}
