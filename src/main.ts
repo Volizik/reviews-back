@@ -8,6 +8,6 @@ async function bootstrap() {
 
   app.enableCors();
 
-  await app.listen(port);
+  await app.listen(process.env.PORT || port);
 }
 bootstrap();
