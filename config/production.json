@@ -9,5 +9,5 @@
   },
   "saltRounds": 10,
   "jwtSecret": "bevz",
-  "baseUrl": "https://worker-reviews.herokuapp.com/"
+  "baseUrl": "https://worker-reviews.herokuapp.com"
 }

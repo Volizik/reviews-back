@@ -7,7 +7,7 @@ export class Review extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({type: "longtext"})
+    @Column()
     text: string;
 
     @ManyToOne(type => User)
