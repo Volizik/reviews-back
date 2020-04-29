@@ -5,18 +5,23 @@ import {InternalServerErrorException} from "@nestjs/common";
 import {WorkerRepository} from "../worker/worker.repository";
 import {User} from "../user/user.entity";
 import {UpdateReviewDto} from "./dto/update-review.dto";
+import {PhotoRepository} from "../photo/photo.repository";
 
 @EntityRepository(Review)
 export class ReviewRepository extends Repository<Review> {
 
-    async createReview({text, ...workerData}: CreateReviewDto, photo: Express.Multer.File, creator: User): Promise<Review> {
+    async createReview({photo, user, body}: CreateReviewDto): Promise<Review> {
         const review = new Review();
+        const {text, ...workerData} = body;
 
         const workerRepository = getCustomRepository(WorkerRepository);
-        const worker = await workerRepository.createWorker({...workerData, photo}, creator);
+        const worker = await workerRepository.createWorker(workerData, user);
+
+        const photoRepository = getCustomRepository(PhotoRepository);
+        await photoRepository.addSinglePhoto({file: photo, worker});
 
         review.text = text;
-        review.creator = creator;
+        review.creator = user;
         review.worker = worker;
 
         try {
@@ -40,9 +45,12 @@ export class ReviewRepository extends Repository<Review> {
         const workerRepository = getCustomRepository(WorkerRepository);
         await workerRepository.updateWorker(
             review.worker.id,
-            {photo, ...workerData},
+            workerData,
             creator,
         );
+
+        const photoRepository = getCustomRepository(PhotoRepository);
+        await photoRepository.addSinglePhoto({file: photo, worker: review.worker});
 
         review.text = text;
 

@@ -1,7 +1,17 @@
-import {BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import {
+    BaseEntity,
+    Column,
+    CreateDateColumn,
+    Entity,
+    ManyToOne,
+    OneToMany,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn
+} from "typeorm";
 import {User} from "../user/user.entity";
 import {Review} from "../review/review.entity";
 import * as config from 'config';
+import {Photo} from "../photo/photo.entity";
 
 const baseUrl = config.get('baseUrl');
 
@@ -20,47 +30,28 @@ export class Worker extends BaseEntity {
     fatherName: string;
 
     @Column()
-    livingCountry: string;
+    country: string;
 
     @Column()
-    livingCity: string;
-
-    @Column()
-    livingStreet: string;
-
-    @Column()
-    livingHouseNumber: string;
-
-    @Column()
-    workingCountry: string;
-
-    @Column()
-    workingCity: string;
-
-    @Column()
-    workingStreet: string;
-
-    @Column()
-    workingHouseNumber: string;
+    city: string;
 
     @Column()
     workingPlace: string;
 
     @Column()
-    workingPosition: string;
+    position: string;
 
-    @Column({default: `${baseUrl}/worker/photo/default_photo.png`})
-    photo?: string;
+    @OneToMany(type => Photo, photo => photo.worker, {eager: true})
+    photos: Photo[];
 
     @ManyToOne(type => User, user => user.workers)
     creator: User;
-
     @Column()
     creatorId: number;
 
-    // @OneToMany(type => Review, review => review.worker)
-    // reviews: Review[];
-
     @CreateDateColumn()
     createdAt: Date;
+
+    @UpdateDateColumn()
+    updatedAt: Date;
 }

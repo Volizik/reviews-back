@@ -6,6 +6,7 @@ import {WorkerModule} from './worker/worker.module';
 import {ReviewModule} from './review/review.module';
 import {TypeOrmModule} from "@nestjs/typeorm";
 import { AuthModule } from './auth/auth.module';
+import { PhotoModule } from './photo/photo.module';
 import typeormConfig from "../config/typeorm.config";
 
 @Module({
@@ -15,6 +16,7 @@ import typeormConfig from "../config/typeorm.config";
         ReviewModule,
         TypeOrmModule.forRoot(typeormConfig),
         AuthModule,
+        PhotoModule,
     ],
     controllers: [AppController],
     providers: [AppService],

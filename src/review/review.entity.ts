@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn, BaseEntity, ManyToOne, CreateDateColumn} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, BaseEntity, ManyToOne, CreateDateColumn, UpdateDateColumn} from 'typeorm';
 import {User} from "../user/user.entity";
 import {Worker} from "../worker/worker.entity";
 
@@ -20,4 +20,7 @@ export class Review extends BaseEntity {
 
     @CreateDateColumn()
     createdAt: Date;
+
+    @UpdateDateColumn()
+    updatedAt: Date;
 }

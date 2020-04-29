@@ -5,13 +5,13 @@ import {
     Get,
     Param,
     Post,
-    Put, Query,
-    UploadedFile,
+    Put, Query, UploadedFile,
+    UploadedFiles,
     UseGuards,
     UseInterceptors
 } from '@nestjs/common';
 import {ReviewService} from "./review.service";
-import {CreateReviewDto} from "./dto/create-review.dto";
+import {CreateReviewBodyDto} from "./dto/create-review.dto";
 import {UpdateReviewDto} from "./dto/update-review.dto";
 import { Review } from './review.entity'
 import {FileInterceptor} from "@nestjs/platform-express";
@@ -43,11 +43,11 @@ export class ReviewController {
     @Post('')
     @UseInterceptors(FileInterceptor('photo', multerOptions))
     create(
-        @Body() body: CreateReviewDto,
+        @Body() body: CreateReviewBodyDto,
         @UploadedFile() photo: Express.Multer.File,
         @GetUser() user: User,
     ): Promise<Review> {
-        return this.reviewService.create(body, photo, user);
+        return this.reviewService.create({body, photo, user});
     }
 
     @UseGuards(AuthGuard('jwt'))
@@ -66,7 +66,5 @@ export class ReviewController {
     delete(@Param('id') id: string): Promise<DeleteResult> {
         return this.reviewService.delete(id);
     }
-
-    //todo delete
 
 }

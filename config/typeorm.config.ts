@@ -4,7 +4,7 @@ import {TypeOrmModuleOptions} from "@nestjs/typeorm";
 const dbConfig = config.get('database');
 
 const typeormConfig: TypeOrmModuleOptions = {
-    "type": "postgres",
+    "type": "mysql",
     "host": dbConfig.host,
     "port": dbConfig.port,
     "username": dbConfig.username,
