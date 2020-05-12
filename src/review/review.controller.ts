@@ -20,7 +20,6 @@ import {AuthGuard} from "@nestjs/passport";
 import {GetUser} from "../auth/get-user.decorator";
 import {User} from "../user/user.entity";
 import {DeleteResult} from "typeorm";
-import {ReviewsFilterDTO} from "./dto/reviews-filter.dto";
 
 @Controller('review')
 export class ReviewController {
@@ -29,9 +28,9 @@ export class ReviewController {
 
     @Get('')
     getAll(
-        @Query() reviewsFilterDTO: ReviewsFilterDTO,
+        @Query('workerId') workerId: string,
     ): Promise<Review[]> {
-        return this.reviewService.getAll(reviewsFilterDTO);
+        return this.reviewService.getAll(workerId);
     }
 
     @Get(':id')

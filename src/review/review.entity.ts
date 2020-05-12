@@ -10,6 +10,18 @@ export class Review extends BaseEntity {
     @Column()
     text: string;
 
+    @Column()
+    country: string;
+
+    @Column()
+    city: string;
+
+    @Column()
+    workingPlace: string;
+
+    @Column()
+    position: string;
+
     @ManyToOne(type => User)
     creator: User;
     @Column()
@@ -17,6 +29,8 @@ export class Review extends BaseEntity {
 
     @ManyToOne(type => Worker, {eager: true})
     worker: Worker;
+    @Column()
+    workerId: number;
 
     @CreateDateColumn()
     createdAt: Date;

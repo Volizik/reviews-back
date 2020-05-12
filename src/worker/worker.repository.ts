@@ -15,11 +15,12 @@ export class WorkerRepository extends Repository<Worker> {
             worker[key] = workerData[key];
         });
         worker.creator = creator;
-
+        console.log(workerData)
         try {
             await worker.save();
             return worker;
         } catch (error) {
+            console.log(error)
             throw new InternalServerErrorException(error);
         }
     }
@@ -41,6 +42,18 @@ export class WorkerRepository extends Repository<Worker> {
         } catch (error) {
             throw new InternalServerErrorException(error);
         }
+    }
+
+    async findByName(name: string): Promise<Worker[]> {
+        const [a, b, c] = name.split(' ');
+
+        return await this.createQueryBuilder("worker")
+            .where(`
+                worker.firstName LIKE :a OR worker.lastName LIKE :b OR worker.fatherName LIKE :c OR
+                worker.firstName LIKE :b OR worker.lastName LIKE :c OR worker.fatherName LIKE :a OR
+                worker.firstName LIKE :c OR worker.lastName LIKE :a OR worker.fatherName LIKE :b
+            `, { a: `%${a}%`, b: `%${b}%`, c: `%${c}%` })
+            .getMany();
     }
 
 }

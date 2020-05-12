@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Param, Post, Res} from '@nestjs/common';
+import {Body, Controller, Get, Param, Post, Query, Res} from '@nestjs/common';
 import {Worker} from "./worker.entity";
 import {WorkerService} from "./worker.service";
 import {CreateWorkerDto} from "./dto/create-worker.dto";
@@ -13,7 +13,12 @@ export class WorkerController {
     constructor(private workerService: WorkerService) {}
 
     @Get()
-    async getAll(): Promise<Worker[]> {
+    async getWorkers(
+        @Query('name') name: string,
+    ): Promise<Worker[]> {
+        if (name) {
+            return this.workerService.findByName(name);
+        }
         return this.workerService.findAll();
     }
 

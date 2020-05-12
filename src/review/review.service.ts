@@ -16,9 +16,9 @@ export class ReviewService {
         private reviewRepository: ReviewRepository,
     ) {}
 
-    async getAll({byCreator}: ReviewsFilterDTO): Promise<Review[]> {
-        if (!!byCreator) {
-            return await this.reviewRepository.find({where: {creatorId: byCreator}});
+    async getAll(workerId: string): Promise<Review[]> {
+        if (!!workerId) {
+            return await this.reviewRepository.find({where: {workerId}});
         }
         return await this.reviewRepository.find();
     }

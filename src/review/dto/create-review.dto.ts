@@ -8,6 +8,7 @@ export interface CreateReviewBodyDto {
     city: string;
     position: string;
     workingPlace: string;
+    tin: string;
     text: string;
 }
 

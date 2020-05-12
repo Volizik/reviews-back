@@ -12,8 +12,7 @@ export class ReviewRepository extends Repository<Review> {
 
     async createReview({photo, user, body}: CreateReviewDto): Promise<Review> {
         const review = new Review();
-        const {text, ...workerData} = body;
-
+        const {text, city, country, position, workingPlace, ...workerData} = body;
         const workerRepository = getCustomRepository(WorkerRepository);
         const worker = await workerRepository.createWorker(workerData, user);
 
@@ -21,6 +20,10 @@ export class ReviewRepository extends Repository<Review> {
         await photoRepository.addSinglePhoto({file: photo, worker});
 
         review.text = text;
+        review.city = city;
+        review.country = country;
+        review.position = position;
+        review.workingPlace = workingPlace;
         review.creator = user;
         review.worker = worker;
 
@@ -35,7 +38,7 @@ export class ReviewRepository extends Repository<Review> {
 
     }
 
-    async updateReview(id: string, {text, ...workerData}: UpdateReviewDto, photo: Express.Multer.File, creator: User): Promise<Review> {
+    async updateReview(id: string, {text, city, country, position, workingPlace, ...workerData}: UpdateReviewDto, photo: Express.Multer.File, creator: User): Promise<Review> {
         const review = await this.findOne(id);
 
         if (review.creatorId !== creator.id) {
@@ -53,6 +56,10 @@ export class ReviewRepository extends Repository<Review> {
         await photoRepository.addSinglePhoto({file: photo, worker: review.worker});
 
         review.text = text;
+        review.city = city;
+        review.country = country;
+        review.workingPlace = workingPlace;
+        review.position = position;
 
         try {
             await review.save();

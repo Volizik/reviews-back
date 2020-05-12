@@ -6,5 +6,6 @@ export interface UpdateReviewDto {
     city: string;
     position: string;
     workingPlace: string;
+    tin: string;
     text: string;
 }

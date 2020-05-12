@@ -19,6 +19,10 @@ export class WorkerService {
         return this.workerRepository.findOne(id);
     }
 
+    async findByName(name: string): Promise<Worker[]> {
+       return this.workerRepository.findByName(name);
+    }
+
     async create(createWorkerDto: CreateWorkerDto, user: User): Promise<Worker> {
         return await this.workerRepository.createWorker(createWorkerDto, user);
     }
