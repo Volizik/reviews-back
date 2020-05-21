@@ -23,6 +23,10 @@ export class ReviewService {
         return await this.reviewRepository.find();
     }
 
+    async getByCreatorId(creatorId: string): Promise<Review[]> {
+        return await this.reviewRepository.find({where: {creatorId}});
+    }
+
     async getById(id: string): Promise<Review> {
         return await this.reviewRepository.findOne(id);
     }

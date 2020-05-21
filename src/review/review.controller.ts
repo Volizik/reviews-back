@@ -33,6 +33,13 @@ export class ReviewController {
         return this.reviewService.getAll(workerId);
     }
 
+    @Get('my')
+    getMyReviews(
+        @Query('creatorId') creatorId: string,
+    ): Promise<Review[]> {
+        return this.reviewService.getByCreatorId(creatorId);
+    }
+
     @Get(':id')
     getById(@Param('id') id: string): Promise<Review> {
         return this.reviewService.getById(id);
