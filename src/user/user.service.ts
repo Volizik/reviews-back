@@ -28,9 +28,9 @@ export class UserService {
             .getOne();
     }
 
-    // public getUserById(id: string): IUser {
-    //     return this.users.find(u => u.id === id);
-    // }
+    async getUserById(id: string): Promise<User> {
+        return this.usersRepository.findOne({where: {id}})
+    }
 
     public async createUser(createUserDto: CreateUserDto): Promise<User> {
         return this.usersRepository.createUser(createUserDto);

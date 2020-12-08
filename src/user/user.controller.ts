@@ -16,6 +16,11 @@ export class UserController {
         return this.userService.getUsers();
     }
 
+    @Get(':id')
+    getUserInfo(@Param('id') id: string): Promise<User> {
+        return this.userService.getUserById(id);
+    }
+
     @Get('me')
     @UseGuards(AuthGuard('jwt'))
     findOne(@GetUser() user: User): Promise<User> {

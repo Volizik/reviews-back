@@ -1,0 +1,13 @@
+{
+  "port": 3001,
+  "database": {
+    "host": "localhost",
+    "port": 3306,
+    "username": "volizik",
+    "password": "123edsaqw",
+    "name": "reviews"
+  },
+  "saltRounds": 10,
+  "jwtSecret": "bevz",
+  "baseUrl": "http://localhost:3001"
+}
